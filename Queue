@@ -1,0 +1,89 @@
+import java.util.LinkedList;
+import java.util.Stack;
+import java.util.Queue;
+public class Main
+{
+    // TRAVERSING
+    public static void display(Queue<Integer>q){
+        for(int i=0;i<q.size();i++){
+        System.out.print(q.peek()+" ");
+        q.add(q.remove());
+        }
+        System.out.println();
+    }
+    // REVERSE
+    public static void reverse(Queue<Integer>q){
+        Stack<Integer>st=new Stack<>();
+        while(q.size()>0){
+            st.push(q.remove());
+        }
+        while(st.size()>0){
+            q.add(st.pop());
+        }
+    }
+    //INSERT AT GIVEN POSITION
+    public static void insert(Queue<Integer>q,int id,int n){
+        if(id<0 || id>q.size()){
+            System.out.println("invalid");
+            return;
+        }
+        int s=q.size();
+        for(int i=0;i<id;i++){
+            q.add(q.remove());
+        }
+        q.add(n);
+        for(int i=0;i<s-id;i++){
+            q.add(q.remove());
+        }
+    }
+    //DELETE AT GIVEN POSITION
+    public static void delete(Queue<Integer>q,int id){
+        if(id<0 || id>q.size()){
+            System.out.println("invalid");
+            return;
+        }
+        int s=q.size();
+        for(int i=0;i<id;i++){
+            q.add(q.remove());
+        }
+        q.remove();
+        for(int i=0;i<q.size()-id;i++){
+            q.add(q.remove());
+        }
+    }
+    //PEEK AT GIVEN POSITION
+    public static void peekatindex(Queue<Integer>q,int id){
+        if(id<0 || id>q.size()){
+            System.out.println("invalid");
+            return;
+        }
+        int s=q.size();
+        for(int i=0;i<id;i++){
+            q.add(q.remove());
+        }
+        System.out.println(q.peek());
+        for(int i=0;i<s-id;i++){
+            q.add(q.remove());
+        } 
+    }
+	public static void main(String[] args) {
+		Queue<Integer>q=new LinkedList<>();
+		q.add(10);
+		q.add(20);
+		q.add(30);
+		q.add(40);
+		System.out.println(q);
+		System.out.println(q.peek());
+		System.out.println(q.remove());
+		System.out.println(q);
+		System.out.println(q.size());
+		display(q);//traversing  20 30 40
+		reverse(q);//reverse queue  
+		display(q);//40 30 20
+		insert(q,1,15);// insert 
+		display(q); //40 15 30 20
+		delete(q,2);
+		display(q);// 40 15 20
+		peekatindex(q,2);//20
+	}
+}
