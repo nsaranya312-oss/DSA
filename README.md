@@ -15,3 +15,8 @@
         PREORDER
         INORDER
         POSTORDER
+        INVERT BINARY TREE
+        IDENTICAL TREE
+        SYMMETRIC TREE
+        PATH SUM
+        LEVEL ORDER TRAVERSAL
