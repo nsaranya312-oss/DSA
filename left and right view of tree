@@ -1,0 +1,31 @@
+//left view
+class Solution {
+    public void left(Node root,int l,ArrayList<Integer>a){
+        if(root==null)return;
+        if(l>=a.size()) a.add(root.data);//to see first node
+        left(root.left,l+1,a);
+        left(root.right,l+1,a);
+    }
+    public ArrayList<Integer> leftView(Node root) {
+        // code here
+        ArrayList<Integer> a=new ArrayList<>();
+        left(root,0,a);
+        return a;
+    }
+}
+//right view
+class Solution {
+    public void right(Node root,int l,ArrayList<Integer>a){
+        if(root==null)return;
+        if(l>=a.size()) a.add(root.data);//to set first node
+        else a.set(l,root.data);//to overwrite the seen node in same level so that last node can entered
+        right(root.left,l+1,a);
+        right(root.right,l+1,a);
+    }
+    public ArrayList<Integer> rightView(Node root) {
+        // code her
+        ArrayList<Integer> a=new ArrayList<>();
+        right(root,0,a);
+        return a;
+    }
+}
