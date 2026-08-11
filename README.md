@@ -20,3 +20,12 @@
         SYMMETRIC TREE
         PATH SUM
         LEVEL ORDER TRAVERSAL
+#BINARY SEARCH TREE
+      CREATE
+      INSERT
+      DELETE
+      MIN
+      MAX
+      SEARCH
+      LCA
+      KTH SMALLEST
