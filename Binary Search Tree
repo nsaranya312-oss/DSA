@@ -1,0 +1,136 @@
+import java.util.*;
+public class Main
+{
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+
+        Node(int val) {
+            this.val = val;
+        }
+    }
+
+    Node insert(Node root, int val) {
+        if (root == null) return new Node(val);
+        //if value less than root ->insert left
+        if (val < root.val) {
+            root.left = insert(root.left, val);
+             //if value greater than root ->insert right
+        } else if (val > root.val) {
+            root.right = insert(root.right, val);
+        }
+
+        return root;
+    }
+
+    Node search(Node root, int val) {
+        if (root == null) return null;
+
+        if (root.val == val) return root;
+
+        if (val < root.val) {
+            return search(root.left, val);
+        }
+
+        return search(root.right, val);
+    }
+    // in bst leftmost element is minimum
+    Node findMin(Node root) {
+        if (root == null) return null;
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+    //in bst  rightmost is maximum
+    Node findMax(Node root) {
+        if (root == null) return null;
+
+        while (root.right != null) {
+            root = root.right;
+        }
+
+        return root;
+    }
+    Node delete(Node root, int key) {
+        if (root == null) return null;
+        //if less than root search left
+        if (key < root.val) {
+            root.left = delete(root.left, key);
+            //if greater than root search right
+        } 
+        else if (key > root.val) {
+            root.right = delete(root.right, key);
+        } 
+        //element found
+        else {
+            //if leaf node 
+            if (root.left == null && root.right == null) return null;
+            // if 1 child
+            if (root.left == null) return root.right;
+            // 1 child
+            if (root.right == null) return root.left;
+            // 2 child
+            // so find predecessor or successor
+            // Node pred=root.left;
+            // while(pred.right!=null)pred=pred.right;
+            // root.left=deleteNode(root.left,pred.val);
+            // pred.left=root.left;
+            // pred.right=root.right;
+            // return pred;
+            Node successor = findMin(root.right);
+            root.val = successor.val;
+            root.right = delete(root.right, successor.val);
+        }
+
+        return root;
+    }
+//lca means node with is common to any two nodes
+    Node lca(Node root, int p, int q) {
+        if (root == null) return null;
+        //if both lies in left subtree
+        if (p < root.val && q < root.val) {
+            return lca(root.left, p, q);
+        }
+        //if both lies in right subtree
+        if (p > root.val && q > root.val) {
+            return lca(root.right, p, q);
+        }
+        // if one left and one right
+        return root;
+    }
+    //in BST inorder always sorted so for find kth smallest element we use inorder
+    void inorder(Node root, ArrayList<Integer> a) {
+        if (root == null) return;
+        inorder(root.left, a);
+        a.add(root.val);
+        inorder(root.right, a);
+    }
+    int kthSmallest(Node root, int k) {
+        ArrayList<Integer> a = new ArrayList<>();
+        inorder(root, a);
+        return a.get(k - 1);
+    }
+
+    public static void main(String[] args) {
+        Main s = new Main();
+        Node root = null;
+        root = s.insert(root, 50);
+        root = s.insert(root, 30);
+        root = s.insert(root, 70);
+        root = s.insert(root, 20);
+        root = s.insert(root, 40);
+        root = s.insert(root, 60);
+        root = s.insert(root, 80);
+        System.out.println("Min: " + s.findMin(root).val);
+        System.out.println("Max: " + s.findMax(root).val);
+        System.out.println("Search 40: " + (s.search(root, 40) != null));
+        System.out.println("LCA of 20 and 40: " + s.lca(root, 20, 40).val);
+        System.out.println("3rd Smallest: " + s.kthSmallest(root, 3));
+        root = s.delete(root, 30);
+        ArrayList<Integer> a = new ArrayList<>();
+        s.inorder(root, a);
+        System.out.println("After Delete: " + a);
+    }
+}
